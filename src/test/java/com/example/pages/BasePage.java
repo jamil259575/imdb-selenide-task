@@ -11,6 +11,7 @@ public class BasePage {
     public void acceptCookies() {
         if (acceptCookiesButton.exists()) {
             acceptCookiesButton.click();
+
         }
     }
     public void openUrl(String path) {

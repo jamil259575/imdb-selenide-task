@@ -2,7 +2,7 @@
 <suite name="IMDb Suite">
     <test name="IMDb Search and Cast Test">
         <classes>
-            <class name="com.example.tests.IMDbTest"/>
+            <class name="com.example.tests.ImdbRegressionSuite"/>
         </classes>
     </test>
 </suite>
