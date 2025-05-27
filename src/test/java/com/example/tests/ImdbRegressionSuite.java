@@ -22,35 +22,26 @@ public class ImdbRegressionSuite extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Description("Search for a title, open its page, then open the 3rd top cast profile and verify actor name matches.")
     public void itShouldOpenActorProfileAndVerifyActorName(String searchTerm) {
-        // Open homepage
         homePage.openUrl("/");
-        // Perform search
         homePage.search(searchTerm);
-        // Save the first result title
-        var firstResult = homePage.getFirstSearchResult();
-        String savedTitle = firstResult.$(".searchResult__constTitle").getText();
-        firstResult.click();
 
-        // Validate title on the resulting page
+        // Use PO method to get and save the title
+        String savedTitle = homePage.getFirstSearchResultTitle();
+        homePage.getFirstSearchResult().click();
+
         String actualTitle = titlePage.getTitleHeading()
                 .shouldBe(Condition.visible)
                 .getText();
         assertEquals(actualTitle, savedTitle);
 
-        // Accept cookies and scroll to cast
         titlePage.acceptCookies();
         titlePage.getTitleCast().scrollIntoView(true).shouldBe(Condition.visible);
+        titlePage.getCastList().shouldHave(sizeGreaterThan(3), Duration.ofSeconds(10));
 
-        // Validate cast list is more than 3
-        var castList = titlePage.getCastList()
-                .shouldHave(sizeGreaterThan(3), Duration.ofSeconds(10));
-
-        // Get and click 3rd cast member
         var thirdActorLink = titlePage.getActorLink(2);
         String thirdActorName = thirdActorLink.getText();
         thirdActorLink.scrollIntoView(true).shouldBe(Condition.visible).click();
 
-        // Verify actor profile
         String actorNameFromProfile = actorPage.getActorNameHeading()
                 .shouldBe(Condition.visible)
                 .getText();

@@ -35,6 +35,7 @@ public class BaseTest {
         Configuration.timeout = Config.getInt("timeout");
 
         ChromeOptions options = new ChromeOptions();
+        //for headless mode
         options.addArguments(
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
