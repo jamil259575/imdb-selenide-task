@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="IMDb Suite">
+    <test name="IMDb Search and Cast Test">
+        <classes>
+            <class name="com.example.tests.IMDbTest"/>
+        </classes>
+    </test>
+</suite>

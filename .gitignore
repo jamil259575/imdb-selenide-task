@@ -1,0 +1,40 @@
+# Java
+*.class
+*.log
+*.swp
+*.swo
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IntelliJ / JetBrains / Aqua
+.idea/
+*.iml
+out/
+
+# Allure reports and results
+allure-report/
+allure-results/
+build/reports/allure-report/
+
+# Logs & temp
+*.tmp
+*.temp
+*.bak
+*.orig
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test screenshots
+screenshots/
+*.png
+
+# JetBrains Aqua test run configs
+runConfigurations/
+
+# Generated files
+target/
