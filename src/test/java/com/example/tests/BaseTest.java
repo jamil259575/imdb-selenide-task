@@ -35,6 +35,7 @@ public class BaseTest {
         Configuration.timeout = Config.getInt("timeout");
 
         ChromeOptions options = new ChromeOptions();
+        //other browsers can be added
         options.addArguments(
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",

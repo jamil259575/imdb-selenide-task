@@ -109,8 +109,22 @@ To run tests in different browsers, pass the desired browser as a system propert
 
 Also possible to enhance this setup in CI (e.g., GitHub Actions) to perform cross-browser tests automatically by configuring multiple jobs or matrix builds.
 
-##  Screenshots on Failure
+##  Allure Reports with BDD-Style Steps
 
-Screenshots are automatically attached to Allure reports if a test fails.
+This project uses [Allure Report](https://docs.qameta.io/allure/) with BDD-style steps for rich, human-readable test reporting.
 
----
+Each test step is annotated using `@Step` (from Allure) to give detailed execution trace in the report, including:
+- Setup and teardown
+- Test data parameters
+- Step durations
+- Visual breakdown of execution hierarchy
+
+Here is an example report screenshot:
+
+
+To generate and open the Allure report:
+
+```bash
+./gradlew clean test
+allure serve build/allure-results
+```
