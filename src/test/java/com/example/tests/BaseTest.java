@@ -30,13 +30,29 @@ public class BaseTest {
     }
 
     private void configureBrowser() {
-        Configuration.browser = Config.get("browser");
-        Configuration.headless = Config.getBoolean("headless");
+        Configuration.browser = Config.get("browser"); // chrome or firefox
         Configuration.timeout = Config.getInt("timeout");
+        boolean isHeadless = Config.getBoolean("headless");
+        switch (Configuration.browser) {
+            case "chrome" -> {
+                Configuration.browserCapabilities = getOptions(isHeadless);
+            }
 
-        ChromeOptions options = new ChromeOptions();
-        //other browsers can be added
-        options.addArguments(
+            case "firefox" -> {
+                org.openqa.selenium.firefox.FirefoxOptions firefoxOptions = new org.openqa.selenium.firefox.FirefoxOptions();
+                if (isHeadless) firefoxOptions.addArguments("--headless");
+                firefoxOptions.addArguments("--width=1920", "--height=1080");
+                Configuration.browserCapabilities = firefoxOptions;
+            }
+
+            default -> throw new IllegalArgumentException("Unsupported browser: " + Configuration.browser);
+        }
+    }
+
+    private static ChromeOptions getOptions(boolean isHeadless) {
+        ChromeOptions chromeOptions = new ChromeOptions();
+        if (isHeadless) chromeOptions.addArguments("--headless=new");
+        chromeOptions.addArguments(
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
                 "--disable-dev-shm-usage",
@@ -44,8 +60,7 @@ public class BaseTest {
                 "--window-size=1920,1080",
                 "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
         );
-
-        Configuration.browserCapabilities = options;
+        return chromeOptions;
     }
 
     private void initPages() {

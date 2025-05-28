@@ -9,38 +9,46 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        browser: [chrome, firefox]  # Edge not supported on ubuntu-latest directly
+    env:
+      BASE_URL: https://www.imdb.com
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Set up JDK 17
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
           distribution: 'temurin'
+          java-version: '17'
 
-      - name: Set execute permission on Gradle wrapper
-        run: chmod +x gradlew
+      - name: Set up Chrome
+        if: matrix.browser == 'chrome'
+        uses: browser-actions/setup-chrome@v1
 
-      - name: Cache Gradle dependencies
+      - name: Set up Firefox
+        if: matrix.browser == 'firefox'
+        uses: browser-actions/setup-firefox@v1
+
+      - name: Cache Gradle
         uses: actions/cache@v3
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
-            gradle-${{ runner.os }}-
+            ${{ runner.os }}-gradle-
 
-      - name: Run UI tests (Headless Chrome)
-        run: ./gradlew clean test -Dheadless=true -DbaseUrl=https://www.imdb.com
+      - name: Grant execute permission to gradlew
+        run: chmod +x gradlew
 
-      - name: Generate Allure report
-        run: ./gradlew allureReport
+      - name: Run Tests on ${{ matrix.browser }}
+        run: ./gradlew clean test -Dbrowser=${{ matrix.browser }} -DbaseUrl=${{ env.BASE_URL }} -Dheadless=true
 
-      - name: Upload Allure report artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v3
         with:
-          name: allure-report
-          path: build/reports/allure-report
+          name: allure-results-${{ matrix.browser }}
+          path: build/allure-results/
