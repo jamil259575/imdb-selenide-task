@@ -27,11 +27,16 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Set up ${{ matrix.browser }}
-        uses: browser-actions/setup-${{ matrix.browser }}@v1
+      - name: Set up Chrome
+        if: matrix.browser == 'chrome'
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Set up Firefox
+        if: matrix.browser == 'firefox'
+        uses: browser-actions/setup-firefox@v1
 
       - name: Cache Gradle
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
@@ -41,10 +46,10 @@ jobs:
       - name: Make Gradle executable
         run: chmod +x gradlew
 
-      - name: Run tests in ${{ matrix.browser }}
+      - name: Run tests on ${{ matrix.browser }}
         run: ./gradlew clean test -Dbrowser=${{ matrix.browser }} -DbaseUrl=${{ env.BASE_URL }} -Dheadless=true
 
-      - name: Upload Allure results (${{ matrix.browser }})
+      - name: Upload Allure results
         if: always()
         uses: actions/upload-artifact@v4
         with:
