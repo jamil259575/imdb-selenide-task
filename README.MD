@@ -73,6 +73,12 @@ timeout=10000
 ```bash
 ./gradlew clean test
 ```
+```bash
+./gradlew clean test -browser=firefox
+```
+```bash
+./gradlew clean test -browser=chrome
+```
 For headed mode pass parameter:
 ```bash
 ./gradlew clean test -Dheadless=false
@@ -102,17 +108,9 @@ It:
 
 ## Cross-Browser Testing
 
-Project uses **Selenide** with a default configuration for **Chrome**, including custom capabilities like user-agent, resolution, and GPU handling.  
-Support for other browsers like **Firefox** and **Edge** can be easily added by extending the browser configuration logic in `BaseTest.java`.
-
-To run tests in different browsers, pass the desired browser as a system property:
-
-```bash
-./gradlew clean test -Dbrowser=firefox
-```
-
-Also possible to enhance this setup in  GitHub Actions file to perform cross-browser tests automatically by configuring multiple jobs or matrix builds.
-
+Project has configuration for **Chrome** and **Mozilla Firefox**, including custom capabilities like user-agent, resolution, and GPU handling.  
+Support for other browsers can be easily added by extending the browser configuration logic in `BaseTest.java`. Tests run in parallel in CI.
+YAML file can be updated based on added browser configuration.
 ##  Allure Reports with BDD-Style Steps
 
 This project uses [Allure Report](https://docs.qameta.io/allure/) with BDD-style steps for rich, human-readable test reporting.
