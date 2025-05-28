@@ -50,7 +50,7 @@ jobs:
         run: ./gradlew clean test -Dbrowser=${{ matrix.browser }} -DbaseUrl=${{ env.BASE_URL }} -Dheadless=true
 
       - name: Upload Allure results
-        if: always() && (success() || failure()) && exists('build/allure-results')
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: allure-results-${{ matrix.browser }}
