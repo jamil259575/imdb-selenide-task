@@ -1,7 +1,6 @@
 package com.example.tests;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -38,9 +37,8 @@ public class ImdbRegressionSuite extends BaseTest {
         titlePage.getTitleCast().scrollIntoView(true).shouldBe(Condition.visible);
         titlePage.getCastList().shouldHave(sizeGreaterThan(3), Duration.ofSeconds(8));
 
-        SelenideElement thirdActorLink = titlePage.getActorLink(2);
-        String thirdActorName = thirdActorLink.getText();
-        thirdActorLink.scrollIntoView(true).shouldBe(Condition.visible).click();
+        String thirdActorName = titlePage.getActorNameByIndex(2);
+        titlePage.clickActorByIndex(2);
 
         String actorNameFromProfile = actorPage.getActorNameHeading()
                 .shouldBe(Condition.visible)
