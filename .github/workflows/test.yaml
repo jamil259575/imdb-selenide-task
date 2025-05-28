@@ -34,7 +34,7 @@ jobs:
             gradle-${{ runner.os }}-
 
       - name: Run UI tests (Headless Chrome)
-        run: ./gradlew clean test -Dheadless=true -DbaseUrl=https://www.imdb.com
+        run: ./gradlew clean test -Dheadless=true
 
       - name: Generate Allure report
         run: ./gradlew allureReport
