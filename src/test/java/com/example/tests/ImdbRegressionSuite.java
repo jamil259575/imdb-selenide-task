@@ -1,6 +1,7 @@
 package com.example.tests;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -25,7 +26,6 @@ public class ImdbRegressionSuite extends BaseTest {
         homePage.openUrl("/");
         homePage.search(searchTerm);
 
-        // Use PO method to get and save the title
         String savedTitle = homePage.getFirstSearchResultTitle();
         homePage.getFirstSearchResult().click();
 
@@ -36,9 +36,9 @@ public class ImdbRegressionSuite extends BaseTest {
 
         titlePage.acceptCookies();
         titlePage.getTitleCast().scrollIntoView(true).shouldBe(Condition.visible);
-        titlePage.getCastList().shouldHave(sizeGreaterThan(3), Duration.ofSeconds(10));
+        titlePage.getCastList().shouldHave(sizeGreaterThan(3), Duration.ofSeconds(8));
 
-        var thirdActorLink = titlePage.getActorLink(2);
+        SelenideElement thirdActorLink = titlePage.getActorLink(2);
         String thirdActorName = thirdActorLink.getText();
         thirdActorLink.scrollIntoView(true).shouldBe(Condition.visible).click();
 

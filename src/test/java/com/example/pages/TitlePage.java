@@ -2,9 +2,6 @@ package com.example.pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 public class TitlePage extends BasePage {
@@ -22,11 +19,6 @@ public class TitlePage extends BasePage {
 
     public SelenideElement getTitleCast(){
         return $("[data-testid='title-cast-header']");
-    }
-
-    public void shouldHaveAtLeastCastMembers(int minCount) {
-        getTitleCast().scrollIntoView(true).shouldBe(visible);
-        getCastList().shouldHave(sizeGreaterThan(minCount));
     }
 
 }
