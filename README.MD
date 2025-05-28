@@ -39,8 +39,8 @@ imdb-selenide-test/
 │   └── config/        # Config loader
 ├── src/test/resources/
 │   └── config.properties
+   └── testng.xml
 ├── build.gradle
-├── testng.xml
 ├── .github/workflows/test.yml
 ├── .gitignore
 └── README.md
