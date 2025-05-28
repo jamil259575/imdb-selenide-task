@@ -7,8 +7,13 @@ on:
     branches: [ master ]
 
 jobs:
-  chrome:
+  test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox]
+
     env:
       BASE_URL: https://www.imdb.com
 
@@ -22,8 +27,8 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Set up Chrome
-        uses: browser-actions/setup-chrome@v1
+      - name: Set up ${{ matrix.browser }}
+        uses: browser-actions/setup-${{ matrix.browser }}@v1
 
       - name: Cache Gradle
         uses: actions/cache@v4
@@ -36,52 +41,12 @@ jobs:
       - name: Make Gradle executable
         run: chmod +x gradlew
 
-      - name: Run tests in Chrome
-        run: ./gradlew clean test -Dbrowser=chrome -DbaseUrl=${{ env.BASE_URL }} -Dheadless=true
+      - name: Run tests in ${{ matrix.browser }}
+        run: ./gradlew clean test -Dbrowser=${{ matrix.browser }} -DbaseUrl=${{ env.BASE_URL }} -Dheadless=true
 
-      - name: Upload Allure results (Chrome)
+      - name: Upload Allure results (${{ matrix.browser }})
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results-chrome
-          path: build/allure-results
-
-  firefox:
-    needs: chrome
-    runs-on: ubuntu-latest
-    env:
-      BASE_URL: https://www.imdb.com
-
-    steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
-
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Set up Firefox
-        uses: browser-actions/setup-firefox@v1
-
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Make Gradle executable
-        run: chmod +x gradlew
-
-      - name: Run tests in Firefox
-        run: ./gradlew clean test -Dbrowser=firefox -DbaseUrl=${{ env.BASE_URL }} -Dheadless=true
-
-      - name: Upload Allure results (Firefox)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results-firefox
+          name: allure-results-${{ matrix.browser }}
           path: build/allure-results
