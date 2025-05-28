@@ -7,13 +7,8 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
+  chrome:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        browser: [chrome, firefox]
-
     env:
       BASE_URL: https://www.imdb.com
 
@@ -28,11 +23,46 @@ jobs:
           java-version: '17'
 
       - name: Set up Chrome
-        if: matrix.browser == 'chrome'
         uses: browser-actions/setup-chrome@v1
 
+      - name: Cache Gradle
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Make Gradle executable
+        run: chmod +x gradlew
+
+      - name: Run tests in Chrome
+        run: ./gradlew clean test -Dbrowser=chrome -DbaseUrl=${{ env.BASE_URL }} -Dheadless=true
+
+      - name: Upload Allure results (Chrome)
+        if: always()
+        uses: actions/upload-artifact@v3.1.3
+        with:
+          name: allure-results-chrome
+          path: build/allure-results
+
+  firefox:
+    needs: chrome
+    runs-on: ubuntu-latest
+    env:
+      BASE_URL: https://www.imdb.com
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Set up Firefox
-        if: matrix.browser == 'firefox'
         uses: browser-actions/setup-firefox@v1
 
       - name: Cache Gradle
@@ -46,12 +76,12 @@ jobs:
       - name: Make Gradle executable
         run: chmod +x gradlew
 
-      - name: Run tests on ${{ matrix.browser }}
-        run: ./gradlew clean test -Dbrowser=${{ matrix.browser }} -DbaseUrl=${{ env.BASE_URL }} -Dheadless=true
+      - name: Run tests in Firefox
+        run: ./gradlew clean test -Dbrowser=firefox -DbaseUrl=${{ env.BASE_URL }} -Dheadless=true
 
-      - name: Upload Allure results
+      - name: Upload Allure results (Firefox)
         if: always()
         uses: actions/upload-artifact@v3.1.3
         with:
-          name: allure-results-${{ matrix.browser }}
+          name: allure-results-firefox
           path: build/allure-results
