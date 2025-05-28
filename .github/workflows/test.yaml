@@ -1,4 +1,4 @@
-name: Run IMDb UI Tests
+name: Run IMDb UI Test
 
 on:
   push:
