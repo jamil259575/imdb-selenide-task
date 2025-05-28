@@ -10,15 +10,18 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        browser: [chrome, firefox]  # Edge not supported on ubuntu-latest directly
+        browser: [chrome, firefox]
+
     env:
       BASE_URL: https://www.imdb.com
+
     steps:
-      - name: Checkout code
+      - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Set up JDK
+      - name: Set up Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
@@ -40,15 +43,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Grant execute permission to gradlew
+      - name: Make Gradle executable
         run: chmod +x gradlew
 
-      - name: Run Tests on ${{ matrix.browser }}
+      - name: Run tests on ${{ matrix.browser }}
         run: ./gradlew clean test -Dbrowser=${{ matrix.browser }} -DbaseUrl=${{ env.BASE_URL }} -Dheadless=true
 
-      - name: Upload test report
-        if: always()
+      - name: Upload Allure results
+        if: always() && (success() || failure()) && exists('build/allure-results')
         uses: actions/upload-artifact@v3
         with:
           name: allure-results-${{ matrix.browser }}
-          path: build/allure-results/
+          path: build/allure-results
