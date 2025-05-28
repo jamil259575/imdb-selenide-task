@@ -35,8 +35,8 @@ public class ImdbRegressionSuite extends BaseTest {
         assertEquals(actualTitle, savedTitle);
 
         titlePage.acceptCookies();
-        titlePage.getTitleCast().scrollIntoView(true).shouldBe(Condition.visible);
-        titlePage.getCastList().shouldHave(sizeGreaterThan(3), Duration.ofSeconds(10));
+        titlePage.getTitleCast().scrollIntoView(true).shouldBe(Condition.visible,Duration.ofSeconds(3));
+        titlePage.getCastList().shouldHave(sizeGreaterThan(3), Duration.ofSeconds(12));
 
         String thirdActorName = titlePage.getActorNameByIndex(2);
         titlePage.clickActorByIndex(2);

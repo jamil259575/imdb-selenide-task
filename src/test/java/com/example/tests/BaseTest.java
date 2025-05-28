@@ -32,15 +32,14 @@ public class BaseTest {
     private void configureBrowser() {
         Configuration.browser = Config.get("browser");
         Configuration.timeout = Config.getInt("timeout");
-        boolean isHeadless = Config.getBoolean("headless");
+        Configuration.headless = Config.getBoolean("headless");
         switch (Configuration.browser) {
             case "chrome" -> {
-                Configuration.browserCapabilities = getOptions(isHeadless);
+                Configuration.browserCapabilities = getOptions();
             }
 
             case "firefox" -> {
                 org.openqa.selenium.firefox.FirefoxOptions firefoxOptions = new org.openqa.selenium.firefox.FirefoxOptions();
-                if (isHeadless) firefoxOptions.addArguments("--headless");
                 firefoxOptions.addArguments("--width=1920", "--height=1080");
                 Configuration.browserCapabilities = firefoxOptions;
             }
@@ -49,9 +48,8 @@ public class BaseTest {
         }
     }
 
-    private static ChromeOptions getOptions(boolean isHeadless) {
+    private static ChromeOptions getOptions() {
         ChromeOptions chromeOptions = new ChromeOptions();
-        if (isHeadless) chromeOptions.addArguments("--headless=new");
         chromeOptions.addArguments(
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
