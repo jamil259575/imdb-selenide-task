@@ -18,14 +18,14 @@ A UI test task framework built with **Java 17**, **Selenide**, **TestNG**, and *
 
 ##  Tech Stack
 
-| Tool         | Usage                            |
-|--------------|----------------------------------|
-| Java 17      | Programming language              |
-| Selenide     | Browser automation (built on Selenium) |
-| TestNG       | Test framework                    |
-| Allure       | Test reporting                    |
-| Gradle       | Build tool                        |
-| GitHub Actions | Continuous integration         |
+| Tool         | Usage                          |
+|--------------|--------------------------------|
+| Java 17      | Programming language            |
+| Selenide     | Browser automation |
+| TestNG       | Test framework                  |
+| Allure       | Test reporting                  |
+| Gradle       | Build tool                      |
+| GitHub Actions | Continuous integration       |
 
 ---
 
@@ -73,6 +73,10 @@ timeout=10000
 ```bash
 ./gradlew clean test
 ```
+For headed mode pass parameter:
+```bash
+./gradlew clean test -Dheadless=false
+```
 ---
 ##  Generate Allure Report
 
@@ -85,7 +89,7 @@ timeout=10000
 
 ##  CI with GitHub Actions
 
-This project includes a ready-to-use workflow:
+This project includes a workflow:
 ```
 .github/workflows/test.yml
 ```
@@ -107,7 +111,7 @@ To run tests in different browsers, pass the desired browser as a system propert
 ./gradlew clean test -Dbrowser=firefox
 ```
 
-Also possible to enhance this setup in CI (e.g., GitHub Actions) to perform cross-browser tests automatically by configuring multiple jobs or matrix builds.
+Also possible to enhance this setup in  GitHub Actions file to perform cross-browser tests automatically by configuring multiple jobs or matrix builds.
 
 ##  Allure Reports with BDD-Style Steps
 
@@ -118,8 +122,6 @@ Each test step is annotated using `@Step` (from Allure) to give detailed executi
 - Test data parameters
 - Step durations
 - Visual breakdown of execution hierarchy
-
-Here is an example report screenshot:
 
 
 To generate and open the Allure report:
