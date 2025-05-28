@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="IMDb Suite">
-    <test name="IMDb Search and Cast Test" parallel="methods" thread-count="4">
+    <test name="IMDb Search and Cast Test">
         <classes>
             <class name="com.example.tests.ImdbRegressionSuite"/>
         </classes>
