@@ -30,7 +30,7 @@ public class BaseTest {
     }
 
     private void configureBrowser() {
-        Configuration.browser = Config.get("browser"); // chrome or firefox
+        Configuration.browser = Config.get("browser");
         Configuration.timeout = Config.getInt("timeout");
         boolean isHeadless = Config.getBoolean("headless");
         switch (Configuration.browser) {
