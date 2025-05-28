@@ -96,6 +96,19 @@ It:
 
 ---
 
+## Cross-Browser Testing
+
+Project uses **Selenide** with a default configuration for **Chrome**, including custom capabilities like user-agent, resolution, and GPU handling.  
+Support for other browsers like **Firefox** and **Edge** can be easily added by extending the browser configuration logic in `BaseTest.java`.
+
+To run tests in different browsers, pass the desired browser as a system property:
+
+```bash
+./gradlew clean test -Dbrowser=firefox
+```
+
+Also possible to enhance this setup in CI (e.g., GitHub Actions) to perform cross-browser tests automatically by configuring multiple jobs or matrix builds.
+
 ##  Screenshots on Failure
 
 Screenshots are automatically attached to Allure reports if a test fails.
