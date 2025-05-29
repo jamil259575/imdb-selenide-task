@@ -18,6 +18,6 @@ public class BasePage {
     }
 
     protected Duration defaultTimeout() {
-        return Duration.ofSeconds(Config.getInt("timeout"));
+        return Duration.ofMillis(Config.getInt("timeout"));
     }
 }
