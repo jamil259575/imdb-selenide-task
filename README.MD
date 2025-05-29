@@ -65,10 +65,6 @@ imdb-selenide-test/
     - [ChromeDriver](https://sites.google.com/chromium.org/driver/)
     - [GeckoDriver](https://github.com/mozilla/geckodriver/releases)
 
-1. Download:
-    - [ChromeDriver](https://sites.google.com/chromium.org/driver/)
-    - [GeckoDriver](https://github.com/mozilla/geckodriver/releases)
-
 2. Extract & move:
 
 ```bash
