@@ -35,11 +35,13 @@ A UI test task framework built with **Java 17**, **Selenide**, **TestNG**, and *
 imdb-selenide-test/
 ├── src/test/java/com/example/
 │   ├── pages/         # Page Object classes
+    ├── dataprovider/         # Data provider object
 │   ├── tests/         # Test and BaseTest classes
+    ├── utils/         # Utility class
 │   └── config/        # Config loader
 ├── src/test/resources/
 │   └── config.properties
-   └── testng.xml
+    └── testng.xml
 ├── build.gradle
 ├── .github/workflows/test.yml
 ├── .gitignore
@@ -62,7 +64,7 @@ cd imdb-selenide-test
 Edit `src/test/resources/config.properties`:
 
 ```properties
-baseUrl=https://www.imdb.com
+baseUrl=https://www.imdb.com/
 browser=chrome
 headless=true
 timeout=10000
