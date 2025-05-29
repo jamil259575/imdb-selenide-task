@@ -1,7 +1,11 @@
 package com.example.pages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import com.example.config.Config;
 import io.qameta.allure.Step;
+
+import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -10,8 +14,10 @@ public class BasePage {
 
     @Step("Accept cookies")
     public void acceptCookies() {
-        if (acceptCookiesButton.exists()) {
-            acceptCookiesButton.click();
-        }
+        acceptCookiesButton.shouldBe(Condition.visible, defaultTimeout()).click();
+    }
+
+    protected Duration defaultTimeout() {
+        return Duration.ofSeconds(Config.getInt("timeout"));
     }
 }

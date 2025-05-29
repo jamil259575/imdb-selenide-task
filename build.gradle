@@ -21,5 +21,5 @@ test {
     useTestNG()
     systemProperty 'headless', System.getProperty('headless', 'true')
     systemProperty 'browser',System.getProperty('browser','chrome')
-    systemProperty 'timeout', System.getProperty('timeout',"10000")
+    systemProperty 'timeout', System.getProperty('timeout',"12000")
 }

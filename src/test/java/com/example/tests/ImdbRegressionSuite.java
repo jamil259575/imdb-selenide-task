@@ -1,12 +1,9 @@
 package com.example.tests;
 
-import com.codeborne.selenide.Condition;
-
 import com.example.dataprovider.TestDataProvider;
 import io.qameta.allure.*;
 import org.testng.annotations.Test;
-import java.time.Duration;
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+
 import static org.testng.Assert.*;
 
 @Epic("IMDb Test")
@@ -19,22 +16,14 @@ public class ImdbRegressionSuite extends BaseTest {
         homePage.search(searchTerm);
         String savedTitle = homePage.getFirstSearchResultTitle();
         homePage.cLickFirstSearchResult();
-
-        String actualTitle = titlePage.getTitleHeading()
-                .shouldBe(Condition.visible)
-                .getText();
+        String actualTitle = titlePage.getTitleHeading();
         assertEquals(actualTitle, savedTitle);
-
         titlePage.acceptCookies();
-        titlePage.getTitleCast().scrollIntoView(true).shouldBe(Condition.visible,Duration.ofSeconds(3));
-        titlePage.getCastList().shouldHave(sizeGreaterThan(3), Duration.ofSeconds(12));
-
+        titlePage.scrollToCastList();
+        titlePage.verifyCastListSize(3);
         String thirdActorName = titlePage.getActorNameByIndex(2);
         titlePage.clickActorByIndex(2);
-
-        String actorNameFromProfile = actorPage.getActorNameHeading()
-                .shouldBe(Condition.visible)
-                .getText();
+        String actorNameFromProfile = actorPage.getActorNameHeading();
         assertEquals(actorNameFromProfile, thirdActorName);
     }
 }
