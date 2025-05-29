@@ -1,5 +1,6 @@
 package com.example.pages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
@@ -15,7 +16,7 @@ public class HomePage extends BasePage {
     }
     @Step("Get first search result")
     public SelenideElement getFirstSearchResult() {
-        return $$("[data-testid='search-result--const']").first();
+        return $$("[data-testid='search-result--const']").first().shouldBe(Condition.visible);
     }
 
     @Step("Save first search result title")
