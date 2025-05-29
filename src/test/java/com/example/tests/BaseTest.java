@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileInputStream;
 
 import static com.codeborne.selenide.Screenshots.takeScreenShotAsFile;
+import static com.codeborne.selenide.Selenide.open;
 
 public class BaseTest {
 
@@ -27,11 +28,11 @@ public class BaseTest {
     public void setUp() {
         configureBrowser();
         initPages();
+        open(Config.get("baseUrl"));
     }
 
     private void configureBrowser() {
         Configuration.browser = Config.get("browser");
-        Configuration.timeout = Config.getInt("timeout");
         Configuration.headless = Config.getBoolean("headless");
         switch (Configuration.browser) {
             case "chrome" -> {

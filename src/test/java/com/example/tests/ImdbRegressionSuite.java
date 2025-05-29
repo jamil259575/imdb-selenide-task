@@ -2,8 +2,8 @@ package com.example.tests;
 
 import com.codeborne.selenide.Condition;
 
+import com.example.dataprovider.TestDataProvider;
 import io.qameta.allure.*;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import java.time.Duration;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
@@ -12,19 +12,10 @@ import static org.testng.Assert.*;
 @Epic("IMDb Test")
 @Feature("Search and Actor Profile Navigation")
 public class ImdbRegressionSuite extends BaseTest {
-
-    @DataProvider(name = "searchTerms")
-    public Object[][] searchTerms() {
-        return new Object[][]{
-                {"QA"}
-        };
-    }
-
-    @Test(dataProvider = "searchTerms",groups = {"regression"})
+    @Test(dataProvider = "searchTerms", dataProviderClass = TestDataProvider.class, groups = {"regression"})
     @Severity(SeverityLevel.CRITICAL)
     @Description("Search for a title, open its page, then open the 3rd top cast profile and verify actor name matches.")
     public void itShouldOpenActorProfileAndVerifyActorName(String searchTerm) {
-        homePage.openUrl("/");
         homePage.search(searchTerm);
         String savedTitle = homePage.getFirstSearchResultTitle();
         homePage.cLickFirstSearchResult();
