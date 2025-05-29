@@ -52,6 +52,60 @@ imdb-selenide-test/
 
 ## Getting Started
 
+#### Prerequisites
+
+- Java 17  
+- Gradle  
+- Chrome & Firefox browsers  
+- Browser drivers in your system `PATH`
+
+#### Driver Setup (Linux/Mac)
+
+1. Download:
+    - [ChromeDriver](https://sites.google.com/chromium.org/driver/)
+    - [GeckoDriver](https://github.com/mozilla/geckodriver/releases)
+
+1. Download:
+    - [ChromeDriver](https://sites.google.com/chromium.org/driver/)
+    - [GeckoDriver](https://github.com/mozilla/geckodriver/releases)
+
+2. Extract & move:
+
+```bash
+tar -xvzf geckodriver-v0.34.0-linux64.tar.gz
+sudo mv geckodriver /usr/local/bin/
+sudo chmod +x /usr/local/bin/geckodriver
+```
+
+Repeat for `chromedriver`.
+
+3. Ensure path:
+
+```bash
+# Add to shell profile if not already
+export PATH=$PATH:/usr/local/bin
+```
+
+4. Verify:
+
+```bash
+chromedriver --version
+geckodriver --version
+```
+---
+#### Driver Setup Windows
+
+- Download:
+    - [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/)
+    - [GeckoDriver](https://github.com/mozilla/geckodriver/releases)
+- Extract and place in a directory like 'C:\WebDriver\bin'
+- Add this directory to your system's **Environment Variables > Path**
+
+```bash
+set PATH=%PATH%;C:\WebDriver\bin
+```
+---
+
 ### 1. Clone the Repo
 
 ```bash
