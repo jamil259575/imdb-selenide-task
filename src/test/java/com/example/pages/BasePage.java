@@ -1,6 +1,5 @@
 package com.example.pages;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.example.config.Config;
 import io.qameta.allure.Step;
@@ -14,7 +13,9 @@ public class BasePage {
 
     @Step("Accept cookies")
     public void acceptCookies() {
-        acceptCookiesButton.shouldBe(Condition.visible, defaultTimeout()).click();
+        if(acceptCookiesButton.exists()){
+            acceptCookiesButton.click();
+        }
     }
 
     protected Duration defaultTimeout() {
