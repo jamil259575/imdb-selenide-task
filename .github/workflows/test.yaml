@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser: [chrome, firefox]
+        browser: [firefox, chrome]
 
     steps:
       - name: Checkout source
@@ -25,11 +25,11 @@ jobs:
           java-version: '17'
 
       - name: Set up Chrome
-        if: matrix.browser == 'firefpx'
+        if: matrix.browser == 'chrome'
         uses: browser-actions/setup-chrome@v1
 
       - name: Set up Firefox
-        if: matrix.browser == 'chrome'
+        if: matrix.browser == 'firefox'
         uses: browser-actions/setup-firefox@v1
 
       - name: Cache Gradle
