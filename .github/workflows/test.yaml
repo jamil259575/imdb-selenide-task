@@ -14,9 +14,6 @@ jobs:
       matrix:
         browser: [chrome, firefox]
 
-    env:
-      BASE_URL: https://www.imdb.com
-
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
@@ -28,11 +25,11 @@ jobs:
           java-version: '17'
 
       - name: Set up Chrome
-        if: matrix.browser == 'chrome'
+        if: matrix.browser == 'firefpx'
         uses: browser-actions/setup-chrome@v1
 
       - name: Set up Firefox
-        if: matrix.browser == 'firefox'
+        if: matrix.browser == 'chrome'
         uses: browser-actions/setup-firefox@v1
 
       - name: Cache Gradle
@@ -47,7 +44,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run tests on ${{ matrix.browser }}
-        run: ./gradlew clean test -Dbrowser=${{ matrix.browser }} -DbaseUrl=${{ env.BASE_URL }} -Dheadless=true
+        run: ./gradlew clean test -Dbrowser=${{ matrix.browser }} -Dheadless=true
 
       - name: Upload Allure results
         if: always()
