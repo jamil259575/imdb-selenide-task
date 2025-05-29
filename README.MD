@@ -98,14 +98,14 @@ geckodriver --version
 - Add this directory to your system's **Environment Variables > Path**
 
 ```bash
-set PATH=%PATH%;C:\WebDriver\bin
+ set PATH=%PATH%;C:\WebDriver\bin
 ```
 ---
 
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/your-username/imdb-selenide-test.git
+ git clone https://github.com/your-username/imdb-selenide-test.git
 cd imdb-selenide-test
 ```
 
