@@ -8,6 +8,7 @@ import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Selenide.*;
+import static com.example.utils.Utils.defaultTimeout;
 
 public class TitlePage extends BasePage {
 
@@ -25,7 +26,7 @@ public class TitlePage extends BasePage {
                 .shouldHave(CollectionCondition.sizeGreaterThanOrEqual(3));
     }
 
-    @Step("Verify that cast list size")
+    @Step("Verify that cast list size is bigger than {size}")
     public void verifyCastListSize(int size ) {
         $$("[data-testid='title-cast-item']").filter(Condition.visible)
                 .shouldHave(sizeGreaterThan(size), defaultTimeout());
